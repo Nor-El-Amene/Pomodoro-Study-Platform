@@ -17,3 +17,6 @@ Thumbs.db
 
 # Local database dumps
 *.dump
+
+# Development-only files
+api/test.php
