@@ -62,9 +62,25 @@ This installs the dependency declared in `package.json`. The `node_modules` fold
 
 ### 3. Configure the database
 
-Create a MySQL database named `focus_app` (or change `DB_NAME`).
+Create a MySQL database named `focus_app` (or change `DB_NAME` in the application configuration).
 
-The application expects the database tables used by the PHP API files.
+Then import the database schema provided in:
+
+```text
+database/schema.sql
+```
+
+The schema creates the tables, indexes, and relationships required by the application.
+
+For example, using MySQL:
+
+```sql
+CREATE DATABASE focus_app;
+```
+
+Then import `database/schema.sql` into the `focus_app` database using phpMyAdmin or the MySQL command line.
+
+The repository contains the database structure only and does not include user accounts, passwords, or other database records.
 
 ### 4. Configure environment variables
 
