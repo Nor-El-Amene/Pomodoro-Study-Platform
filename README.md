@@ -2,6 +2,21 @@
 
 A full-stack productivity and study platform built from scratch.
 
+## About
+
+Pomodoro Study Platform is a personal full-stack web application designed to help students manage focused study sessions, organize tasks, track productivity, and study collaboratively through online study rooms.
+
+## Preview
+
+### Pomodoro Timer
+![Pomodoro Timer](images/screenshots/pomodoro.png)
+
+### Study Rooms
+![Study Rooms](images/screenshots/study-rooms.png)
+
+### Statistics
+![Statistics](images/screenshots/statistics.png)
+
 ## Features
 
 - Pomodoro timer and study sessions
