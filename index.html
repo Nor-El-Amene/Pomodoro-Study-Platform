@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>focus ~ study timer</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<!-- Splash Screen -->
+<div class="splash-screen" id="splashScreen">
+    <div class="splash-content">
+        <div class="splash-logo">
+            <i class="fas fa-circle-dot"></i>
+        </div>
+        <div class="splash-text">focus</div>
+        <div class="splash-loader">
+            <div class="splash-loader-bar"></div>
+        </div>
+        <p class="splash-tagline">get things done.</p>
+    </div>
+</div>
+    <!-- Background -->
+    <div class="bg-slideshow" id="bgSlideshow">
+        <div class="bg-slide active" style="background-image: url('images/beautiful-office-space-cartoon-style\ \(1\).jpg')"></div>
+        <div class="bg-slide" style="background-image: url('images/cozy-room-with-sunset-student.jpg')"></div>
+        <div class="bg-slide" style="background-image: url('images/cartoon-lofi-young-manga-style-girl-studying-while-listening-music-raining-street-ai-generative.jpg')"></div>
+        <div class="bg-slide" style="background-image: url('images/beautiful-office-space-cartoon-style.jpg')"></div>
+        <div class="bg-overlay"></div>
+    </div>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <i class="fas fa-circle-dot"></i>
+                <span class="logo-text">focus</span>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li class="nav-item active" data-page="focus" data-tooltip="Focus">
+                <i class="fas fa-brain"></i>
+                <span>Focus</span>
+            </li>
+            <li class="nav-item" data-page="countdown" data-tooltip="Countdown">
+                <i class="fas fa-hourglass-half"></i>
+                <span>Countdown</span>
+            </li>
+            <li class="nav-item" data-page="timer" data-tooltip="Stopwatch">
+                <i class="fas fa-stopwatch"></i>
+                <span>Stopwatch</span>
+            </li>
+            <li class="nav-item" data-page="stats" data-tooltip="Stats">
+                <i class="fas fa-chart-simple"></i>
+                <span>Stats</span>
+            </li>
+            <li class="nav-item" data-page="rooms" data-tooltip="Study Rooms">
+                <i class="fas fa-users"></i>
+                <span>Rooms</span>
+            </li>
+        </ul>
+        <div class="sidebar-footer">
+            <div class="sidebar-action" id="themeToggle" data-tooltip="Theme">
+                <i class="fas fa-moon"></i>
+                <span>Dark</span>
+            </div>
+            <div class="sidebar-action" id="authBtn" data-tooltip="Account">
+                <i class="fas fa-user"></i>
+                <span>Sign In</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Todo Toggle -->
+    <div class="todo-toggle" id="todoToggleBtn">
+        <i class="fas fa-list-check"></i>
+        <span class="todo-badge" id="todoBadge">0</span>
+    </div>
+
+    <!-- Todo Panel -->
+    <div class="todo-panel" id="todoPanel">
+        <div class="todo-panel-header">
+            <h3><i class="fas fa-list-check"></i> Tasks</h3>
+            <button class="icon-btn" id="todoPanelClose"><i class="fas fa-xmark"></i></button>
+        </div>
+        <div class="todo-panel-body">
+            <div class="todo-input-row">
+                <input type="text" id="todoInput" placeholder="New task..." autocomplete="off">
+                <button class="icon-btn add-btn" id="addTodoBtn"><i class="fas fa-plus"></i></button>
+            </div>
+            <div class="todo-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="active">Active</button>
+                <button class="filter-btn" data-filter="completed">Done</button>
+            </div>
+            <ul class="todo-list" id="todoList"></ul>
+            <div class="todo-footer">
+                <span id="todoCount">0 left</span>
+                <button class="text-btn" id="clearCompletedBtn">Clear done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <main class="main-content" id="mainContent">
+
+        <!-- ===== FOCUS PAGE ===== -->
+        <section class="page active" id="page-focus">
+            <div class="focus-layout">
+                <div class="focus-left">
+                    <div class="focus-header-row">
+                        <div class="session-badge" id="focusSessionBadge">
+                            <span id="focusPhaseLabel">Focus</span>
+                        </div>
+                        <div class="session-counter">
+                            <span id="currentSession">1</span>/<span id="totalSessions">4</span>
+                        </div>
+                    </div>
+
+                    <div class="session-dots" id="sessionDots"></div>
+
+                    <div class="timer-circle-area">
+                        <div class="timer-circle">
+                            <svg class="progress-ring" viewBox="0 0 200 200">
+                                <circle class="progress-ring-bg" cx="100" cy="100" r="90"/>
+                                <circle class="progress-ring-bar" id="focusProgressBar" cx="100" cy="100" r="90"/>
+                            </svg>
+                            <div class="timer-display">
+                                <span class="time-text" id="focusTimeDisplay">25:00</span>
+                                <span class="time-label" id="focusTimeLabel">FOCUS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timer-controls">
+                        <button class="ctrl-btn" id="focusResetBtn" title="Reset"><i class="fas fa-rotate-left"></i></button>
+                        <button class="main-btn" id="focusStartBtn"><i class="fas fa-play"></i><span>Start</span></button>
+
+                    </div>
+
+                    <button class="gear-btn" id="focusSettingsToggle"><i class="fas fa-gear"></i></button>
+
+                    <div class="settings-dropdown" id="focusSettingsContent">
+                        <div class="settings-grid">
+                            <div class="s-item">
+                                <label>Focus</label>
+                                <div class="num-input">
+                                    <button class="minus" data-target="focusDuration">−</button>
+                                    <input type="number" id="focusDuration" value="25" min="1" max="120">
+                                    <button class="plus" data-target="focusDuration">+</button>
+                                </div>
+                            </div>
+                            <div class="s-item">
+                                <label>Break</label>
+                                <div class="num-input">
+                                    <button class="minus" data-target="breakDuration">−</button>
+                                    <input type="number" id="breakDuration" value="5" min="1" max="60">
+                                    <button class="plus" data-target="breakDuration">+</button>
+                                </div>
+                            </div>
+                            <div class="s-item">
+                                <label>Long Break</label>
+                                <div class="num-input">
+                                    <button class="minus" data-target="longBreakDuration">−</button>
+                                    <input type="number" id="longBreakDuration" value="15" min="1" max="60">
+                                    <button class="plus" data-target="longBreakDuration">+</button>
+                                </div>
+                            </div>
+                            <div class="s-item">
+                                <label>Sessions</label>
+                                <div class="num-input">
+                                    <button class="minus" data-target="sessionCount">−</button>
+                                    <input type="number" id="sessionCount" value="4" min="1" max="12">
+                                    <button class="plus" data-target="sessionCount">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="apply-btn" id="applyFocusSettings">Apply</button>
+                    </div>
+
+                    <div class="mini-stats">
+                        <div class="mini-stat"><i class="fas fa-fire"></i><span id="completedSessions">0</span> done</div>
+                        <div class="mini-stat"><i class="fas fa-clock"></i><span id="totalFocusTime">0m</span></div>
+                    </div>
+                    <div class="today-study-caption" id="todayStudyFocus">
+                        <i class="fas fa-book-open"></i>
+                        <span id="todayTimeFocus">0m studied today</span>
+                    </div>
+                </div>
+
+                <!-- Right Side: Sticker -->
+                <div class="focus-right" id="focusRight">
+                    <div class="sticker-area" id="stickerArea">
+                        <img src="images/go-study.jpg" alt="Go Study!" id="stickerImg" class="sticker-img sticker-idle">
+                        <p class="sticker-caption" id="stickerCaption">go study! →</p>
+                    </div>
+                </div>
+                <div class="mini-sticker bottom-right">
+                    <img src="images/sticker-focus.jpg" alt="studying" class="floating-sticker">
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== COUNTDOWN PAGE ===== -->
+        <section class="page" id="page-countdown">
+            <div class="countdown-layout">
+                <div class="countdown-left">
+                    <div class="timer-circle-area">
+                        <div class="timer-circle">
+                            <svg class="progress-ring" viewBox="0 0 200 200">
+                                <circle class="progress-ring-bg" cx="100" cy="100" r="90"/>
+                                <circle class="progress-ring-bar cd-bar" id="countdownProgressBar" cx="100" cy="100" r="90"/>
+                            </svg>
+                            <div class="timer-display">
+                                <span class="time-text" id="countdownTimeDisplay">25:00</span>
+                                <span class="time-label">COUNTDOWN</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timer-controls">
+                        <button class="ctrl-btn" id="countdownResetBtn"><i class="fas fa-rotate-left"></i></button>
+                        <button class="main-btn" id="countdownStartBtn"><i class="fas fa-play"></i><span>Start</span></button>
+                    </div>
+
+                    <div class="time-set-row">
+                        <div class="time-col">
+                            <label>H</label>
+                            <div class="num-input">
+                                <button class="minus" data-target="cdHours">−</button>
+                                <input type="number" id="cdHours" value="0" min="0" max="23">
+                                <button class="plus" data-target="cdHours">+</button>
+                            </div>
+                        </div>
+                        <div class="time-col">
+                            <label>M</label>
+                            <div class="num-input">
+                                <button class="minus" data-target="cdMinutes">−</button>
+                                <input type="number" id="cdMinutes" value="25" min="0" max="59">
+                                <button class="plus" data-target="cdMinutes">+</button>
+                            </div>
+                        </div>
+                        <div class="time-col">
+                            <label>S</label>
+                            <div class="num-input">
+                                <button class="minus" data-target="cdSeconds">−</button>
+                                <input type="number" id="cdSeconds" value="0" min="0" max="59">
+                                <button class="plus" data-target="cdSeconds">+</button>
+                            </div>
+                        </div>
+                        <button class="apply-btn small" id="setCountdownBtn">Set</button>
+                    </div>
+
+                    <div class="presets-row">
+                        <button class="preset" data-minutes="5">5m</button>
+                        <button class="preset" data-minutes="10">10m</button>
+                        <button class="preset active" data-minutes="25">25m</button>
+                        <button class="preset" data-minutes="30">30m</button>
+                        <button class="preset" data-minutes="45">45m</button>
+                        <button class="preset" data-minutes="60">60m</button>
+                    </div>
+                    <div class="today-study-caption" id="todayStudyCountdown">
+    <i class="fas fa-book-open"></i>
+    <span id="todayTimeCountdown">0m studied today</span>
+</div>
+                </div>
+
+                <div class="countdown-right">
+                    <div class="sticker-area">
+                        <img src="images/working.jpg" alt="working" class="sticker-img">
+                        <p class="sticker-caption">you rn →</p>
+                    </div>
+                </div>
+
+                <div class="mini-sticker bottom-left">
+                    <img src="images/sticker-thinking.jpg" alt="thinking" class="floating-sticker">
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== STOPWATCH PAGE ===== -->
+        <section class="page" id="page-timer">
+            <div class="stopwatch-layout">
+                <div class="stopwatch-left">
+                    <div class="sw-display">
+                        <span class="sw-time" id="stopwatchDisplay">00:00:00</span>
+                        <span class="sw-ms" id="stopwatchMs">.00</span>
+                    </div>
+
+                    <div class="timer-controls">
+                        <button class="ctrl-btn" id="stopwatchResetBtn"><i class="fas fa-rotate-left"></i></button>
+                        <button class="main-btn" id="stopwatchStartBtn"><i class="fas fa-play"></i><span>Start</span></button>
+                        <button class="ctrl-btn" id="stopwatchLapBtn"><i class="fas fa-flag"></i></button>
+                    </div>
+
+                    <div class="laps-box" id="lapsBox">
+                        <div class="laps-list" id="lapsList">
+                            <div class="empty-msg"><i class="fas fa-flag"></i> No laps yet</div>
+                        </div>
+                    </div>
+                    <div class="today-study-caption" id="todayStudyStopwatch">
+    <i class="fas fa-book-open"></i>
+    <span id="todayTimeStopwatch">0m studied today</span>
+</div>
+                </div>
+
+                <div class="stopwatch-right">
+                    <div class="sticker-area">
+                        <img src="images/studying.jpg" alt="studying" class="sticker-img">
+                        <p class="sticker-caption">keep going →</p>
+                    </div>
+                </div>
+                <div class="mini-sticker bottom-right">
+                    <img src="images/sticker-tired.jpg" alt="tired" class="floating-sticker">
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== STATS PAGE ===== -->
+        <section class="page" id="page-stats">
+            <div class="stats-layout">
+                <!-- Sign in prompt (shown when not logged in) -->
+                <div class="stats-signin-prompt" id="statsSigninPrompt">
+                    <div class="signin-prompt-card">
+                        <i class="fas fa-lock"></i>
+                        <h3>Sign in to track your study hours</h3>
+                        <p>Create an account or sign in to save your progress and view your stats.</p>
+                        <button class="main-btn" id="statsGoToAuth"><i class="fas fa-user"></i><span>Sign In</span></button>
+                    </div>
+                </div>
+
+                <!-- Stats content (shown when logged in) -->
+                <div class="stats-content" id="statsContent">
+                    <div class="stats-welcome" id="statsWelcome">
+                        <span id="statsUserName"></span>
+                    </div>
+                    <div class="stats-top">
+                        <div class="stat-box">
+                            <span class="stat-num" id="statTodaySessions">0</span>
+                            <span class="stat-lbl">Today</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num" id="statTodayTime">0m</span>
+                            <span class="stat-lbl">Focus</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num" id="statWeekTime">0h</span>
+                            <span class="stat-lbl">Week</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-num" id="statStreak">0</span>
+                            <span class="stat-lbl">Streak</span>
+                        </div>
+                    </div>
+
+                    <div class="heatmap-section">
+                        <h3>Last 60 Days</h3>
+                        <div class="heatmap" id="heatmap"></div>
+                        <div class="heatmap-legend">
+                            <span>Less</span>
+                            <div class="h-box lv0"></div>
+                            <div class="h-box lv1"></div>
+                            <div class="h-box lv2"></div>
+                            <div class="h-box lv3"></div>
+                            <div class="h-box lv4"></div>
+                            <span>More</span>
+                        </div>
+                    </div>
+
+                    <div class="stats-sticker">
+                        <img src="images/go-study.jpg" alt="go study" class="sticker-img small-sticker">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== AUTH PAGE ===== -->
+        <section class="page" id="page-auth">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="login">Sign In</button>
+                        <button class="auth-tab" data-tab="signup">Sign Up</button>
+                    </div>
+
+                    <div class="auth-error hidden" id="authError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="authErrorMsg"></span>
+                    </div>
+
+                    <form class="auth-form" id="loginForm">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="loginEmail" placeholder="you@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="loginPassword" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="main-btn full-w">Sign In</button>
+                        <p class="auth-footer-text">Don't have an account? <a href="#" id="goToSignup">Sign up</a></p>
+                    </form>
+
+                    <form class="auth-form hidden" id="signupForm">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" id="signupName" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="signupEmail" placeholder="you@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="signupPassword" placeholder="••••••••" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password</label>
+                            <input type="password" id="signupConfirm" placeholder="••••••••" required>
+                        </div>
+                        <button type="submit" class="main-btn full-w">Create Account</button>
+                        <p class="auth-footer-text">Already have an account? <a href="#" id="goToLogin">Sign in</a></p>
+                    </form>
+
+                    <div class="auth-sticker">
+                        <img src="images/studying.jpg" alt="" class="sticker-img">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ROOMS PAGE ===== -->
+        <section class="page" id="page-rooms">
+            <div class="rooms-layout">
+
+                <!-- Not logged in prompt -->
+                <div class="rooms-signin-prompt hidden" id="roomsSigninPrompt">
+                    <div class="signin-prompt-card">
+                        <i class="fas fa-lock"></i>
+                        <h3>Sign in to join study rooms</h3>
+                        <p>Study with others, track shared progress, and stay accountable together.</p>
+                        <button class="main-btn" id="roomsGoToAuth"><i class="fas fa-user"></i><span>Sign In</span></button>
+                    </div>
+                </div>
+
+                <!-- Rooms content -->
+                <div class="rooms-content" id="roomsContent">
+
+                    <!-- Top bar -->
+                    <div class="rooms-topbar">
+                        <h2 class="rooms-title"><i class="fas fa-users"></i> Study Rooms</h2>
+                        <div class="rooms-actions">
+                            <button class="ctrl-btn" id="refreshRoomsBtn" title="Refresh"><i class="fas fa-rotate-right"></i></button>
+                            <button class="main-btn small-btn" id="openCreateRoomBtn"><i class="fas fa-plus"></i><span>New Room</span></button>
+                            <button class="main-btn small-btn outline-btn" id="openJoinRoomBtn"><i class="fas fa-right-to-bracket"></i><span>Join</span></button>
+                        </div>
+                    </div>
+
+                    <!-- Rooms grid -->
+                    <div class="rooms-grid" id="roomsGrid">
+                        <div class="rooms-empty" id="roomsEmpty">
+                            <i class="fas fa-door-open"></i>
+                            <p>No rooms yet. Create one or join with an invite code!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== CREATE ROOM MODAL ===== -->
+            <div class="modal-overlay hidden" id="createRoomModal">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-plus-circle"></i> Create Room</h3>
+                        <button class="icon-btn" id="closeCreateModal"><i class="fas fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Room Name *</label>
+                            <input type="text" id="roomName" placeholder="e.g. Finals Week Grind 📚" maxlength="60">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" id="roomDesc" placeholder="What are you studying?" maxlength="120">
+                        </div>
+                        <div class="modal-row">
+                            <div class="form-group">
+                                <label>Goal (hours)</label>
+                                <div class="num-input">
+                                    <button class="minus" data-target="roomGoalHours">−</button>
+                                    <input type="number" id="roomGoalHours" value="10" min="1" max="500">
+                                    <button class="plus" data-target="roomGoalHours">+</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Max Members</label>
+                                <div class="num-input">
+                                    <button class="minus" data-target="roomMaxMembers">−</button>
+                                    <input type="number" id="roomMaxMembers" value="10" min="2" max="50">
+                                    <button class="plus" data-target="roomMaxMembers">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Entry Price (DZD) — 0 for free</label>
+                            <div class="num-input">
+                                <button class="minus" data-target="roomPrice">−</button>
+                                <input type="number" id="roomPrice" value="0" min="0" max="10000">
+                                <button class="plus" data-target="roomPrice">+</button>
+                            </div>
+                        </div>
+                        <div class="modal-error hidden" id="createRoomError"></div>
+                        <button class="main-btn full-w" id="createRoomSubmitBtn"><i class="fas fa-plus"></i><span>Create Room</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== JOIN ROOM MODAL ===== -->
+            <div class="modal-overlay hidden" id="joinRoomModal">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-right-to-bracket"></i> Join a Room</h3>
+                        <button class="icon-btn" id="closeJoinModal"><i class="fas fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Invite Code</label>
+                            <input type="text" id="joinInviteCode" placeholder="Enter 8-character code..." maxlength="8" style="text-transform:uppercase; letter-spacing:3px; font-weight:700; font-size:1rem;">
+                        </div>
+                        <div class="modal-error hidden" id="joinRoomError"></div>
+                        <button class="main-btn full-w" id="joinRoomSubmitBtn"><i class="fas fa-right-to-bracket"></i><span>Join Room</span></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== ROOM DETAIL MODAL ===== -->
+            <div class="modal-overlay hidden" id="roomDetailModal">
+                <div class="modal-card wide-modal">
+                    <div class="modal-header">
+                        <div>
+                            <h3 id="detailRoomName">Room Name</h3>
+                            <p class="modal-subtitle" id="detailRoomDesc"></p>
+                        </div>
+                        <button class="icon-btn" id="closeDetailModal"><i class="fas fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Progress bar -->
+                        <div class="room-progress-wrap">
+                            <div class="room-progress-bar-bg">
+                                <div class="room-progress-bar-fill" id="detailProgressFill"></div>
+                            </div>
+                            <div class="room-progress-labels">
+                                <span id="detailProgressText">0h / 0h</span>
+                                <span id="detailProgressPct">0%</span>
+                            </div>
+                        </div>
+
+                        <!-- Invite code -->
+                        <div class="invite-code-row">
+                            <span class="invite-label">Invite Code:</span>
+                            <span class="invite-code-badge" id="detailInviteCode">--------</span>
+                            <button class="icon-btn copy-btn" id="copyInviteCodeBtn" title="Copy"><i class="fas fa-copy"></i></button>
+                        </div>
+
+                        <!-- Leaderboard -->
+                        <div class="leaderboard">
+                            <h4><i class="fas fa-trophy"></i> Leaderboard</h4>
+                            <div class="leaderboard-list" id="leaderboardList">
+                                <div class="empty-msg">Loading members...</div>
+                            </div>
+                        </div>
+
+                        <!-- Enter Room button -->
+                        <button class="main-btn full-w" id="enterRoomBtn" style="margin-top:4px;">
+                            <i class="fas fa-video"></i><span>Enter Study Room</span>
+                        </button>
+                        <button class="main-btn full-w" id="deleteRoomBtn" style="margin-top:4px; background:rgba(239,68,68,0.12); border-color:rgba(239,68,68,0.3); color:#f87171; display:none;">
+    <i class="fas fa-trash"></i><span>Delete Room</span>
+</button>
+<button class="main-btn full-w" id="leaveRoomMemberBtn" style="margin-top:4px; background:rgba(239,68,68,0.06); border-color:rgba(239,68,68,0.2); color:#f87171; display:none;">
+    <i class="fas fa-right-from-bracket"></i><span>Leave Room</span>
+</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== ROOM CREATED SUCCESS ===== -->
+            <div class="modal-overlay hidden" id="roomCreatedModal">
+                <div class="modal-card">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-check-circle"></i> Room Created!</h3>
+                        <button class="icon-btn" id="closeRoomCreatedModal"><i class="fas fa-xmark"></i></button>
+                    </div>
+                    <div class="modal-body" style="text-align:center;">
+                        <p style="color:var(--text-2); font-size:0.85rem; margin-bottom:16px;">Share this invite code with your study buddies:</p>
+                        <div class="big-invite-code" id="createdInviteCode">--------</div>
+                        <button class="main-btn" style="margin-top:20px;" id="copyCreatedCodeBtn"><i class="fas fa-copy"></i><span>Copy Code</span></button>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    
+
+    <script src="script.js"></script>
+</body>
+</html>

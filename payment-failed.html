@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed - focus</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: #0a0a0a;
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+        }
+        .result-card {
+            background: rgba(20,20,20,0.65);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 18px;
+            padding: 40px 32px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .result-icon {
+            width: 70px; height: 70px;
+            border-radius: 50%;
+            background: rgba(244, 67, 54, 0.15);
+            border: 2px solid rgba(244, 67, 54, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 1.8rem;
+            color: #f44336;
+        }
+        .result-card h2 { margin-bottom: 8px; }
+        .result-card p { color: rgba(255,255,255,0.5); font-size: 0.85rem; margin-bottom: 20px; }
+        .result-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            background: #fff;
+            color: #0a0a0a;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-card">
+        <div class="result-icon"><i class="fas fa-xmark"></i></div>
+        <h2>Payment Failed</h2>
+        <p>Something went wrong with your payment. No money was charged. Please try again.</p>
+        <a href="index.html" class="result-btn"><i class="fas fa-arrow-left"></i> Back to Focus</a>
+    </div>
+</body>
+</html>
