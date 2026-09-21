@@ -9,13 +9,13 @@ Pomodoro Study Platform is a personal full-stack web application designed to hel
 ## Preview
 
 ### Pomodoro Timer
-![Pomodoro Timer](images/screenshots/pomodoro.png)
+![Pomodoro Timer](images/screenshots/pomodoro.jpg)
 
 ### Study Rooms
-![Study Rooms](images/screenshots/study-rooms.png)
+![Study Rooms](images/screenshots/study-rooms.jpg)
 
 ### Statistics
-![Statistics](images/screenshots/statistics.png)
+![Statistics](images/screenshots/statistics.jpg)
 
 ## Features
 
