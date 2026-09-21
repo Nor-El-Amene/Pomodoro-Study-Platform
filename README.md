@@ -28,6 +28,19 @@ Pomodoro Study Platform is a personal full-stack web application designed to hel
 - Paid study-room support through Chargily
 - PHP/MySQL backend
 
+## Project Highlights
+
+- Built a full-stack productivity platform from scratch.
+- Implemented user authentication and account management.
+- Developed Pomodoro timer and study-session tracking.
+- Implemented task management with create, update, delete, and completion features.
+- Developed study statistics and productivity tracking.
+- Built collaborative study rooms with room creation, joining, and leaving functionality.
+- Implemented PeerJS-based peer communication for collaborative study rooms.
+- Developed a PHP/MySQL backend for persistent application data.
+- Integrated payment functionality using Chargily.
+
+  
 ## Tech Stack
 
 - HTML
